@@ -211,7 +211,7 @@ class AccBook(object):
                     self.bookDB.dbcur.execute("DELETE FROM book WHERE id = ?;", (record_id,))
                 else:
                     print("初めに戻ります。")
-                    self.delete(record_id)
+                    return
             else:
                 print("入力が不正です。")
                 self.delete(record_id)
