@@ -1,0 +1,45 @@
+HouseholdAccountBook クラス
+    ・input_outcome関数(private)
+        引数 … なし
+        返り値 … 日付、用途、内訳、金額を表す文字列
+
+        動作
+            日付を標準入力から受け取る(月、日)
+            dailyかextraかを選択させる((d)aily, (e)xtra)
+            用途を標準入力から数字の形で受け取る
+                (int型にキャスト)
+            内訳を標準入力から受け取る
+            金額を標準入力から受け取る
+                (字句・構文解析を行い四則演算をできるようにする)
+
+            入力終了後に内容の確認画面を表示(よろしいですか？(y/n))
+            yを入力→上記の5つを返り値として返す
+            nを入力→はじめから入力をやり直す
+
+
+    ・output_outcome関数(private)
+        引数 … date(str), usage_num(int), detail(str), amount(int), is_extra(bool)
+            date … 日付
+            usage_num … 用途を表す番号
+            detail … 内訳
+            amount … 金額
+        返り値 - なし
+
+        動作
+            n月分(第m週のとき)を
+            帳簿
+                "year_n.txt"に保存
+            残高
+                "year_n_daily_m.txt"、
+                "year_n_extra_m.txt"に保存
+
+            15日より前なら…
+                →datetime.monthより1月前の名前のファイルを開く(r)
+            15日より後なら…
+                →datetime.monthの名前のファイルを開く(r)
+            (is_extraの値に応じて開く残高記録ファイルの種類を変える)
+            開ければデータを読み込む
+            開けなければ新しく作成(w)、初期データを書き込む
+
+            引数にとったものを使って表に書き込む内容を構成
+            帳簿、残高を更新
