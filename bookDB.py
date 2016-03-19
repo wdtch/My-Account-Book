@@ -81,6 +81,6 @@ class BookDBManager(object):
 
         return self.dbcur.fetchall()
 
-    def get_latest_20_records(self):
-        self.dbcur.execute("SELECT * FROM book ORDER BY id DESC LIMIT 20;")
+    def get_latest_records(self, num):
+        self.dbcur.execute("SELECT * FROM book ORDER BY id DESC LIMIT ?;", (num,))
         return self.dbcur.fetchall()

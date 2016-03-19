@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+from dateutil.relativedelta import relativedelta
 
 from calc import Calculator
 from checker import Checkers
@@ -224,8 +225,8 @@ class AccBook(object):
 
             if current >= fifteen and last < fifteen:
                 exporter = export.Exporter()
-                exporter.export_markdown((last - datetime.timedelta()).year,
-                                         (last - datetime.timedelta()).day)
+                exporter.export_markdown((current.date() - relativedelta(months=1)).year,
+                                         (current.date() - relativedelta(months=1)).month)
 
     def _record_startdate(self):
         with open("startdate.txt", "w") as f:

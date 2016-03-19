@@ -10,6 +10,6 @@ class QuickViewer(object):
     def __init__(self):
         self.db = BookDBManager()
 
-    def view(self):
-        l = self.db.get_latest_20_records()
+    def view(self, num=20):
+        l = self.db.get_latest_records(num)
         pprint.pprint(list(reversed(l)))

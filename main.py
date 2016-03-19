@@ -8,14 +8,14 @@ Usage:
   main.py [-d | --delete] [<id>]
   main.py [-e | --export] [<year>] [<month>]
   main.py [-h | --help]
-  main.py [-q | --qview]
+  main.py [-q | --qview] [<num>]
 
 Options:
   -b --balance  現在の残高を表示します。年月の指定があった場合は、その時点での残高を表示します。
   -d --delete   指定されたIDを持つレコードを削除します。
   -e --export   指定された年月の分の家計簿を出力します。
   -h --help     このヘルプを表示します。
-  -q --qview    最新20件のレコードを一覧表示します。
+  -q --qview    最新n件のレコードを一覧表示します。件数の指定がない場合は20件分を表示します。
 """
 
 
@@ -53,6 +53,9 @@ if __name__ == '__main__':
             print("正しい年月を入力してください。")
     elif args["--qview"]:
         q_viewer = QuickViewer()
-        q_viewer.view()
+        if args["<num>"] is None:
+          q_viewer.view()
+        else:
+          q_viewer.view(int(args["<num>"]))
     else:
         accbook.record()

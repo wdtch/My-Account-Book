@@ -15,13 +15,15 @@ class Calculator(object):
         "NUMBER",
         "PLUS",
         "MINUS",
-        "TIMES"
+        "TIMES",
+        "DIVIDE"
     )
 
     # 正規表現によるルール
     t_PLUS = r'\+'
     t_MINUS = r'-'
     t_TIMES = r'\*'
+    t_DIVIDE = r'/'
 
     # 正規表現とアクションコード
     def t_NUMBER(self, t):
@@ -38,7 +40,8 @@ class Calculator(object):
 
     # エラー処理
     def t_error(self, t):
-        print("Illegal Character: {0}".format(t.value[0]))
+        # print("Illegal Character: {0}".format(t.value[0]))
+        pass
 
     # 文法定義
     def p_program_expr(self, p):
@@ -46,9 +49,9 @@ class Calculator(object):
         p[0] = p[1]
 
     def p_expression_plus_minus(self, p):
-        '''expression : multiplicative-expr
-                      | expression PLUS multiplicative-expr
-                      | expression MINUS multiplicative-expr'''
+        '''expression : term
+                      | expression PLUS term
+                      | expression MINUS term'''
         if len(p) == 2:
             p[0] = p[1]
         else:
@@ -58,16 +61,20 @@ class Calculator(object):
                 p[0] = p[1] - p[3]
 
     def p_expression_times(self, p):
-        '''multiplicative-expr : NUMBER
-                               | multiplicative-expr TIMES NUMBER'''
+        '''term : NUMBER
+                | term TIMES NUMBER
+                | term DIVIDE NUMBER'''
         if len(p) == 2:
             p[0] = p[1]
         else:
-            p[0] = p[1] * p[3]
+            if p[2] == '*':
+                p[0] = p[1] * p[3]
+            elif p[2] == '/':
+                p[0] = p[1] // p[3]
 
     # 構文エラー
     def p_error(self, p):
-        print("Syntax Error")
+        raise yacc.YaccError("Syntax Error")
 
     def build(self, **kwargs):
         # Lexer構築
@@ -79,3 +86,10 @@ class Calculator(object):
         self.build()
         result = self.parser.parse(s)
         return result
+
+
+if __name__ == '__main__':
+    c = Calculator()
+    s = input("Input Formula > ")
+    res = c.calc(s)
+    print(res)
