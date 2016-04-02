@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import datetime
+from dateutil.relativedelta import relativedelta
 
 from bookDB import BookDBManager
 
@@ -48,6 +50,13 @@ class Exporter(object):
         else:
             md += "Extra: {}  \n".format(15000 - extra)
 
+        # 支出を書き込み
+        expense = self.db.get_total_expense(year, month)
+        if expense <= 25000:
+            md += "Total: {}  \n".format(expense)
+        else:
+            md += "Total: <span style=\"color:red\">{}</span>  \n".format(expense)
+
         # 内容を書き込み
         # 表のフォーマット
         md += "\n## 詳細\n" + \
@@ -61,11 +70,21 @@ class Exporter(object):
         with open("books/{0}_{1}.md".format(year, month), "w") as f:
             f.write(md)
 
+    def export_all(self):
+        month_list = [datetime.date(2015, 9, 1)]
+        while month_list[-1] < datetime.date.today() - relativedelta(months=1):
+            month_list.append(month_list[-1] + relativedelta(months=1))
+
+        for d in month_list:
+            self.export_markdown(d.year, d.month)
+
 
 if __name__ == '__main__':
     args = sys.argv
-    year = int(args[1])
-    month = int(args[2])
-
     exporter = Exporter()
-    exporter.export_markdown(year, month)
+    if args[1] == "-a":
+        exporter.export_all()
+    else:
+        year = int(args[1])
+        month = int(args[2])
+        exporter.export_markdown(year, month)

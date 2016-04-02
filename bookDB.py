@@ -72,6 +72,16 @@ class BookDBManager(object):
 
         return extra
 
+    def get_total_expense(self, year, month):
+        if month == 12:
+            self.dbcur.execute("SELECT total(amount) FROM book WHERE (year = ? AND month = 12 AND day >= 15) OR (year = ? AND month = 1 AND day <= 14);", (year, year+1))
+            expense = int(self.dbcur.fetchone()[0])
+        else:
+            self.dbcur.execute("SELECT total(amount) FROM book WHERE year = ? AND ((month = ? AND day >= 15) OR (month = ? AND day <= 14));", (year, month, month+1))
+            expense = int(self.dbcur.fetchone()[0])
+
+        return expense
+
     def get_monthlyrecords(self, year, month):
         # 1月分のレコードをすべて取得する
         if month == 12:
