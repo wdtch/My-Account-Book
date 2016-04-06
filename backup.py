@@ -26,4 +26,4 @@ class AutoBackup(object):
 
 if __name__ == '__main__':
     AutoBackup.backup_books()
-    # AutoBackup.backup_db()
+    AutoBackup.backup_db()
