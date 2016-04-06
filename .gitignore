@@ -1,0 +1,14 @@
+.Python
+__init__.py
+__pycache__/
+bin/
+checker_test.py
+include/
+lib/
+logs/
+parser.out
+parsetab.py
+pip-selfcheck.json
+share/
+startdate.txt
+test/__init__.py
