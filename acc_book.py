@@ -4,6 +4,7 @@
 import datetime
 from dateutil.relativedelta import relativedelta
 
+from backup import AutoBackup
 from calc import Calculator
 from checker import Checkers
 from bookDB import BookDBManager
@@ -26,6 +27,7 @@ class AccBook(object):
 
     def record(self):
         self._input_year()
+        AutoBackup.backup()
 
     def _input_year(self):
         year = input("年を入力してください。\n"
@@ -210,6 +212,7 @@ class AccBook(object):
             if Checkers.isvalid_confirm(ok_or_not):
                 if ok_or_not == "y":
                     self.bookDB.dbcur.execute("DELETE FROM book WHERE id = ?;", (record_id,))
+                    AutoBackup.backup()
                 else:
                     print("初めに戻ります。")
                     return
