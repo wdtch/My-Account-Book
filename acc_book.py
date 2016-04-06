@@ -163,7 +163,7 @@ class AccBook(object):
         self.bookDB.dbcon.close()
 
         # 自動バックアップ
-        AutoBackup.backup()
+        AutoBackup.backup_db()
 
     def browse_balance(self,
                         year=datetime.date.today().year,
@@ -220,7 +220,7 @@ class AccBook(object):
                     self.bookDB.dbcon.close()
 
                     # 変更をバックアップ
-                    AutoBackup.backup()
+                    AutoBackup.backup_db()
                 else:
                     print("初めに戻ります。")
                     return

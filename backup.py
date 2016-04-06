@@ -9,14 +9,21 @@ class AutoBackup(object):
         pass
 
     @staticmethod
-    def backup():
+    def backup_books():
         cmd1 = "git add books/*"
-        cmd2 = "git add db/*"
-        cmd3 = "git commit -m \"Backup\""
+        cmd2 = "git commit -m \"Backup\""
 
         subprocess.call(cmd1.strip().split(" "))
         subprocess.call(cmd2.strip().split(" "))
-        subprocess.call(cmd3.strip().split(" "))
+
+    @staticmethod
+    def backup_db():
+        cmd1 = "git add db/*"
+        cmd2 = "git commit -m \"Backup\""
+
+        subprocess.call(cmd1.strip().split(" "))
+        subprocess.call(cmd2.strip().split(" "))
 
 if __name__ == '__main__':
-    AutoBackup.backup()
+    AutoBackup.backup_books()
+    AutoBackup.backup_db()

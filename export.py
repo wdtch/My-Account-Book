@@ -4,6 +4,7 @@ import sys
 import datetime
 from dateutil.relativedelta import relativedelta
 
+from backup import AutoBackup
 from bookDB import BookDBManager
 
 class Exporter(object):
@@ -70,6 +71,9 @@ class Exporter(object):
         with open("books/{0}_{1}.md".format(year, month), "w") as f:
             f.write(md)
 
+        # バックアップ
+        AutoBackup.backup_books()
+
     def export_all(self):
         month_list = [datetime.date(2015, 9, 1)]
         while month_list[-1] < datetime.date.today() - relativedelta(months=1):
@@ -78,6 +82,8 @@ class Exporter(object):
         for d in month_list:
             self.export_markdown(d.year, d.month)
 
+        # バックアップ
+        AutoBackup.backup_books()
 
 if __name__ == '__main__':
     args = sys.argv
