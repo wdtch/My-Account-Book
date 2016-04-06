@@ -11,7 +11,7 @@ class AutoBackup(object):
     @staticmethod
     def backup_books():
         cmd1 = "git add books/*"
-        cmd2 = "git commit -m Auto-Backup"
+        cmd2 = "git commit -m \"Auto-Backup\""
 
         subprocess.call(cmd1.strip().split(" "))
         subprocess.call(cmd2.strip().split(" "))
@@ -19,7 +19,7 @@ class AutoBackup(object):
     @staticmethod
     def backup_db():
         cmd1 = "git add db/*"
-        cmd2 = "git commit -m Auto-Backup"
+        cmd2 = "git commit -m \"Auto-Backup\""
 
         subprocess.call(cmd1.strip().split(" "))
         subprocess.call(cmd2.strip().split(" "))
