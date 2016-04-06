@@ -27,7 +27,6 @@ class AccBook(object):
 
     def record(self):
         self._input_year()
-        AutoBackup.backup()
 
     def _input_year(self):
         year = input("年を入力してください。\n"
@@ -163,6 +162,9 @@ class AccBook(object):
         # 後処理
         self.bookDB.dbcon.close()
 
+        # 自動バックアップ
+        AutoBackup.backup()
+
     def browse_balance(self,
                         year=datetime.date.today().year,
                         month=datetime.date.today().month,
@@ -212,6 +214,12 @@ class AccBook(object):
             if Checkers.isvalid_confirm(ok_or_not):
                 if ok_or_not == "y":
                     self.bookDB.dbcur.execute("DELETE FROM book WHERE id = ?;", (record_id,))
+                    # 変更を保存
+                    self.bookDB.dbcon.commit()
+                    # 後処理
+                    self.bookDB.dbcon.close()
+
+                    # 変更をバックアップ
                     AutoBackup.backup()
                 else:
                     print("初めに戻ります。")
