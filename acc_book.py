@@ -12,6 +12,7 @@ from bookDB import BookDBManager
 import export
 
 
+# デフォルトの入力テキストを指定できるように拡張されたinput()
 def rlinput(prompt, prefill=""):
     readline.set_startup_hook(lambda: readline.insert_text(str(prefill)))
     try:
@@ -33,15 +34,6 @@ class AccBook(object):
         self.detail = ""
         self.amount = ""
         self.bookDB = BookDBManager()
-
-    # def rlinput(prompt, prefill=""):
-    #     def hook():
-    #             readline.insert_text(prefill)
-    #             readline.redisplay()
-    #     readline.set_pre_input_hook(hook)
-    #     result = input(prompt)
-    #     readline.set_pre_input_hook()
-    #     return result
 
     def record(self):
         self._input_year()
