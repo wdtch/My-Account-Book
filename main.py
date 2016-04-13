@@ -8,7 +8,6 @@ Usage:
   main.py [-d | --delete] [<id>]
   main.py [-e | --export] [<year>] [<month>]
   main.py [-h | --help]
-  main.py [-m | --modify] [<id>]
   main.py [-q | --qview] [<num>]
 
 Options:
@@ -16,7 +15,6 @@ Options:
   -d --delete   指定されたIDを持つレコードを削除します。
   -e --export   指定された年月の分の家計簿を出力します。
   -h --help     このヘルプを表示します。
-  -m --modify   指定されたIDを持つレコードを修正します。
   -q --qview    最新n件のレコードを一覧表示します。件数の指定がない場合は20件分を表示します。
 """
 
@@ -53,11 +51,6 @@ if __name__ == '__main__':
             exporter.export_markdown(int(args["<year>"]), int(args["<month>"]))
         else:
             print("正しい年月を入力してください。")
-    elif args["--modify"]:
-        if args["<id>"] is not None and Checkers.isvalid_id(args["<id>"]):
-            accbook.modify(int(args["<id>"]))
-        else:
-            print("正しいIDを入力してください。")
     elif args["--qview"]:
         q_viewer = QuickViewer()
         if args["<num>"] is None:
